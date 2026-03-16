@@ -20,6 +20,19 @@ A production-ready **Retrieval-Augmented Generation (RAG)** system for medical d
 
 ---
 
+## System Interface
+
+### Clinical Knowledge Search
+<img src="images/home_page.png" width="900"/>
+
+### Upload Medical Documents
+<img src="images/upload_page.png" width="900"/>
+
+### Retrieval Evaluation Dashboard
+<img src="images/evaluation.png" width="900"/>
+
+---
+
 ## Technology Stack
 
 - **Backend:** Flask + LangChain
