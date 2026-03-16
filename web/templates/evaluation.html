@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}System Evaluation — MedQuery{% endblock %}
+
+{% block page_hero %}
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-chart-line me-2" style="font-size:1.3rem;opacity:.9;"></i>Retrieval Evaluation</h1>
+        <p>Performance metrics across a 10-question golden dataset sample.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Summary metrics -->
+<div class="section-title">Summary Metrics</div>
+<div class="row g-3 mb-5">
+    <div class="col-sm-6">
+        <div class="metric-card">
+            <div class="metric-icon {{ 'good' if summary.context_found_rate > 0.6 else 'warn' }}">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <div class="metric-value {{ 'good' if summary.context_found_rate > 0.6 else 'warn' }}">
+                {{ "%.0f"|format(summary.context_found_rate * 100) }}<span style="font-size:1.4rem;">%</span>
+            </div>
+            <div class="metric-label">Context Found Rate</div>
+            <div class="metric-desc">Questions where the correct context appeared in the top 3 results.</div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="metric-card">
+            <div class="metric-icon {{ 'good' if summary.avg_top_score > 1.5 else 'warn' }}">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="metric-value {{ 'good' if summary.avg_top_score > 1.5 else 'warn' }}">
+                {{ "%.2f"|format(summary.avg_top_score) }}
+            </div>
+            <div class="metric-label">Average Top Score</div>
+            <div class="metric-desc">Mean confidence score of the top retrieved passage. Higher is better.</div>
+        </div>
+    </div>
+</div>
+
+<!-- By Category -->
+<div class="section-title">Performance by Category</div>
+<div class="card mb-5">
+    <div class="card-body" style="padding:0 !important;">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th style="width:45%;">Context Found Rate</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category, rate in summary.by_category.items() %}
+                    <tr>
+                        <td>
+                            {% if 'cardio' in category|lower %}
+                                <i class="fas fa-heart text-danger me-2"></i>
+                            {% elif 'neuro' in category|lower %}
+                                <i class="fas fa-brain me-2" style="color:var(--primary);"></i>
+                            {% elif 'endo' in category|lower %}
+                                <i class="fas fa-droplet text-warning me-2"></i>
+                            {% else %}
+                                <i class="fas fa-file-medical me-2" style="color:var(--text-muted);"></i>
+                            {% endif %}
+                            {{ category }}
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress flex-grow-1" style="height:8px;">
+                                    <div class="progress-bar {% if rate > 0.6 %}bg-success{% elif rate > 0.3 %}bg-warning{% else %}bg-danger{% endif %}"
+                                         role="progressbar"
+                                         style="width:{{ rate * 100 }}%;"
+                                         aria-valuenow="{{ rate * 100 }}"
+                                         aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <span style="font-size:.82rem;color:var(--text-muted);min-width:36px;">{{ "%.0f"|format(rate * 100) }}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            {% if rate > 0.6 %}
+                                <span class="badge score-high"><i class="fas fa-check me-1"></i>Good</span>
+                            {% elif rate > 0.3 %}
+                                <span class="badge score-medium">Fair</span>
+                            {% else %}
+                                <span class="badge score-low"><i class="fas fa-times me-1"></i>Poor</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- By Complexity -->
+<div class="section-title">Performance by Complexity</div>
+<div class="card mb-5">
+    <div class="card-body" style="padding:0 !important;">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Complexity</th>
+                        <th style="width:45%;">Context Found Rate</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complexity, rate in summary.by_complexity.items() %}
+                    <tr>
+                        <td>
+                            {% if complexity == 'basic' %}
+                                <i class="fas fa-circle-dot me-2" style="color:var(--accent);"></i>
+                            {% elif complexity == 'intermediate' %}
+                                <i class="fas fa-circle-half-stroke me-2" style="color:#F59E0B;"></i>
+                            {% else %}
+                                <i class="fas fa-circle me-2" style="color:var(--danger);"></i>
+                            {% endif %}
+                            {{ complexity | capitalize }}
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress flex-grow-1" style="height:8px;">
+                                    <div class="progress-bar {% if rate > 0.6 %}bg-success{% elif rate > 0.3 %}bg-warning{% else %}bg-danger{% endif %}"
+                                         role="progressbar"
+                                         style="width:{{ rate * 100 }}%;"
+                                         aria-valuenow="{{ rate * 100 }}"
+                                         aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <span style="font-size:.82rem;color:var(--text-muted);min-width:36px;">{{ "%.0f"|format(rate * 100) }}%</span>
+                            </div>
+                        </td>
+                        <td>
+                            {% if rate > 0.6 %}
+                                <span class="badge score-high"><i class="fas fa-check me-1"></i>Good</span>
+                            {% elif rate > 0.3 %}
+                                <span class="badge score-medium">Fair</span>
+                            {% else %}
+                                <span class="badge score-low"><i class="fas fa-times me-1"></i>Poor</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Timestamp -->
+<div class="alert alert-secondary">
+    <i class="fas fa-clock me-2"></i>
+    <strong>Evaluated:</strong> {{ summary.timestamp }}
+</div>
+
+<!-- Actions -->
+<div class="d-flex gap-3 flex-wrap">
+    <a href="/" class="btn btn-primary">
+        <i class="fas fa-search me-2"></i>Ask Questions
+    </a>
+    <a href="/upload" class="btn btn-outline-primary">
+        <i class="fas fa-folder-plus me-2"></i>Upload Documents
+    </a>
+</div>
+
+{% endblock %}

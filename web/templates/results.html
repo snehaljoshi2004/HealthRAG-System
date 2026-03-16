@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results — MedQuery{% endblock %}
+
+{% block page_hero %}
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-book-open me-2" style="font-size:1.3rem;opacity:.9;"></i>Retrieved Passages</h1>
+        <p>{{ result_count }} relevant passage{{ 's' if result_count != 1 }} found in the knowledge base.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Back button -->
+<a href="/" class="btn btn-outline-primary mb-4">
+    <i class="fas fa-arrow-left me-2"></i>New Search
+</a>
+
+<!-- Question -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>
+            <span class="header-icon"><i class="fas fa-question"></i></span>
+            Your Question
+        </h3>
+    </div>
+    <div class="card-body">
+        <p class="mb-0" style="font-size:1.05rem;color:var(--text-dark);font-weight:500;line-height:1.5;">{{ question }}</p>
+    </div>
+    <div class="card-footer">
+        <i class="fas fa-file-lines me-2"></i>{{ result_count }} passage{{ 's' if result_count != 1 }} retrieved
+    </div>
+</div>
+
+<!-- Results -->
+<div class="section-title">Retrieved Passages</div>
+
+{% for result in results %}
+<div class="card result-card fade-up" style="animation-delay:{{ loop.index0 * 0.07 }}s; opacity:0;">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-secondary" style="background:var(--primary) !important;">#{{ loop.index }}</span>
+                <span class="badge {{ result.score_class }}">Score: {{ result.score }}</span>
+                {% if result.is_uploaded %}
+                    <span class="badge" style="background:var(--accent-light);color:var(--accent);">
+                        <i class="fas fa-upload me-1"></i>Uploaded
+                    </span>
+                {% endif %}
+            </div>
+            <small style="color:var(--text-muted);font-size:.8rem;">
+                <i class="fas fa-file me-1"></i>{{ result.source }}
+            </small>
+        </div>
+    </div>
+    <div class="card-body">
+        <pre class="result-content">{{ result.content }}</pre>
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-sm btn-outline-secondary copy-btn"
+                onclick="copyToClipboard(this, {{ result.content | tojson }})">
+            <i class="fas fa-copy me-1"></i>Copy passage
+        </button>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Actions -->
+<div class="d-flex gap-3 mt-4 flex-wrap">
+    <a href="/" class="btn btn-primary">
+        <i class="fas fa-arrow-left me-2"></i>New Search
+    </a>
+    <a href="/upload" class="btn btn-outline-primary">
+        <i class="fas fa-folder-plus me-2"></i>Upload Documents
+    </a>
+</div>
+
+<script>
+function copyToClipboard(button, text) {
+    navigator.clipboard.writeText(text).then(function() {
+        const orig = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check me-1"></i>Copied';
+        button.classList.replace('btn-outline-secondary', 'btn-success');
+        setTimeout(function() {
+            button.innerHTML = orig;
+            button.classList.replace('btn-success', 'btn-outline-secondary');
+        }, 2000);
+    });
+}
+</script>
+{% endblock %}

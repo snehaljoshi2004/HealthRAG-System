@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Documents — MedQuery{% endblock %}
+
+{% block page_hero %}
+<div class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-folder-plus me-2" style="font-size:1.3rem;opacity:.9;"></i>Upload Medical Documents</h1>
+        <p>Add clinical literature, guidelines, or research papers to the knowledge base.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>
+                    <span class="header-icon"><i class="fas fa-cloud-arrow-up"></i></span>
+                    Select Files
+                </h3>
+            </div>
+            <div class="card-body">
+
+                <div class="alert alert-info mb-4">
+                    <i class="fas fa-circle-info me-2"></i>
+                    Accepted formats: <strong>PDF, Markdown (.md), Plain text (.txt), HTML</strong>
+                    &nbsp;·&nbsp; Max total size: <strong>16 MB</strong>
+                </div>
+
+                <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
+
+                    <!-- Drop zone -->
+                    <div class="drop-zone mb-3" id="dropZone">
+                        <div class="drop-zone-content">
+                            <div class="dz-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                            <h5>Drag &amp; drop files here</h5>
+                            <p>or browse from your computer</p>
+                            <label for="files" class="btn btn-outline-primary btn-sm" style="pointer-events:all;cursor:pointer;">
+                                <i class="fas fa-folder-open me-2"></i>Browse Files
+                            </label>
+                        </div>
+                    </div>
+
+                    <input class="d-none" type="file" id="files" name="files[]"
+                           multiple accept=".pdf,.md,.txt,.html">
+
+                    <!-- File list preview -->
+                    <div id="filePreview" class="file-preview mb-4" style="display:none;">
+                        <div class="file-preview-header">Selected files</div>
+                        <div id="fileList"></div>
+                    </div>
+
+                    <!-- Progress -->
+                    <div id="progressContainer" class="mb-4" style="display:none;">
+                        <label class="form-label">Processing</label>
+                        <div class="progress" style="height:10px;">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                 id="uploadProgress" role="progressbar" style="width:0%"></div>
+                        </div>
+                        <p style="font-size:.83rem;color:var(--text-muted);margin-top:6px;" id="progressStatus">Uploading…</p>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg flex-grow-1" id="uploadBtn">
+                            <i class="fas fa-cloud-arrow-up me-2"></i>Upload &amp; Process
+                        </button>
+                        <a href="/" class="btn btn-outline-secondary btn-lg">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- Supported formats -->
+        <div class="section-title">Supported Formats</div>
+        <div class="format-grid mb-4">
+            <div class="format-item">
+                <span class="fi-icon" style="color:#C0392B;"><i class="fas fa-file-pdf"></i></span>
+                <div>
+                    <h6>PDF</h6>
+                    <p>Research papers, textbooks, clinical guidelines</p>
+                </div>
+            </div>
+            <div class="format-item">
+                <span class="fi-icon" style="color:var(--primary);"><i class="fas fa-file-lines"></i></span>
+                <div>
+                    <h6>Markdown</h6>
+                    <p>Structured notes, formatted documentation</p>
+                </div>
+            </div>
+            <div class="format-item">
+                <span class="fi-icon" style="color:var(--accent);"><i class="fas fa-file-alt"></i></span>
+                <div>
+                    <h6>Plain Text</h6>
+                    <p>Abstracts, notes, raw clinical content</p>
+                </div>
+            </div>
+            <div class="format-item">
+                <span class="fi-icon" style="color:#D97706;"><i class="fas fa-file-code"></i></span>
+                <div>
+                    <h6>HTML</h6>
+                    <p>Saved web pages, medical reference sites</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning">
+            <i class="fas fa-triangle-exclamation me-2"></i>
+            Documents are processed and indexed in real-time. They become searchable immediately after upload.
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dropZone        = document.getElementById('dropZone');
+    const fileInput       = document.getElementById('files');
+    const filePreview     = document.getElementById('filePreview');
+    const fileList        = document.getElementById('fileList');
+    const uploadForm      = document.getElementById('uploadForm');
+    const uploadBtn       = document.getElementById('uploadBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const uploadProgress  = document.getElementById('uploadProgress');
+    const progressStatus  = document.getElementById('progressStatus');
+
+    // Drag and drop
+    ['dragenter','dragover','dragleave','drop'].forEach(ev => {
+        dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); });
+    });
+    ['dragenter','dragover'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.add('highlight')));
+    ['dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, () => dropZone.classList.remove('highlight')));
+
+    dropZone.addEventListener('drop', e => {
+        fileInput.files = e.dataTransfer.files;
+        updatePreview(fileInput.files);
+    });
+
+    dropZone.querySelector('label').addEventListener('click', e => {
+        e.preventDefault();
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => updatePreview(fileInput.files));
+
+    function updatePreview(files) {
+        if (!files.length) { filePreview.style.display = 'none'; return; }
+        filePreview.style.display = 'block';
+        fileList.innerHTML = '';
+
+        Array.from(files).forEach(file => {
+            const ext  = file.name.split('.').pop().toUpperCase();
+            const size = (file.size / 1024).toFixed(1);
+            const iconMap = { PDF:'fa-file-pdf text-danger', MD:'fa-file-lines text-primary', TXT:'fa-file-alt text-success', HTML:'fa-file-code text-warning' };
+            const icon = iconMap[ext] || 'fa-file';
+
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `<i class="fas ${icon} file-icon"></i>
+                              <span class="file-name">${file.name}</span>
+                              <span class="file-size">${size} KB</span>`;
+            fileList.appendChild(item);
+        });
+    }
+
+    uploadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!fileInput.files.length) { alert('Please select files to upload.'); return; }
+
+        progressContainer.style.display = 'block';
+        uploadBtn.disabled = true;
+        uploadBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin me-2"></i>Processing…';
+
+        let pct = 0;
+        const labels = ['Uploading files…', 'Extracting text…', 'Generating embeddings…', 'Finalising…'];
+        const interval = setInterval(() => {
+            pct = Math.min(pct + 2, 90);
+            uploadProgress.style.width = pct + '%';
+            progressStatus.textContent = labels[Math.floor(pct / 25)];
+        }, 200);
+
+        fetch('/upload', { method: 'POST', body: new FormData(uploadForm) })
+            .then(() => {
+                clearInterval(interval);
+                uploadProgress.style.width = '100%';
+                progressStatus.textContent = 'Complete! Redirecting…';
+                window.location.href = '/';
+            })
+            .catch(() => {
+                clearInterval(interval);
+                progressStatus.textContent = 'An error occurred. Please try again.';
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '<i class="fas fa-cloud-arrow-up me-2"></i>Upload & Process';
+            });
+    });
+});
+</script>
+{% endblock %}

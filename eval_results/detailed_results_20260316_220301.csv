@@ -1,0 +1,12 @@
+id,question,category,complexity,context_found,num_contexts,top_score,timestamp
+0,What is the significance of positive Babinski sign with muscle atrophy and fasciculations in the sam...,,advanced,True,3,2.485475038506894,20260316_220301
+1,Which clinical feature distinguishes neuroborreliosis from other causes of facial palsy?...,,advanced,True,3,2.3390370194668013,20260316_220301
+2,"1. In GIST patients, why is imatinib preferred for a primary KIT exon 11 mutation, whereas sunitinib...",,advanced,True,3,1.7201514300618528,20260316_220301
+3,3. Choose the characteristic effect of altered heart rate on valvular heart lesions (two correct ans...,,advanced,False,3,3.8703320301305464,20260316_220301
+4,"Which infection-related disease presents with cerebellar ataxia, hemiplegia, and multiple cranial ne...",,advanced,True,3,2.2129191828061496,20260316_220301
+5,1. Which of the following enzymes is directly involved in the iodination of tyrosyl residues in thyr...,,advanced,True,3,1.9339650654197618,20260316_220301
+6,"2. A 45-year-old woman is diagnosed with IDH1-mutant, MGMT-methylated glioblastoma multiforme (GBM)....",,advanced,False,3,-0.1389789207964232,20260316_220301
+7,"9. In the PARADIGM-HF study, LCZ696 was used, which is a combination of:
+A. a neprilysin inhibitor a...",,advanced,False,3,3.485303284212479,20260316_220301
+8,1. The use of digitalis and verapamil is absolutely contraindicated in:...,,advanced,False,3,3.8624100146702034,20260316_220301
+9,"1. A 76-year-old man, previously without chronic illnesses and not on any regular medications, sudde...",,advanced,False,3,-1.6117794754229737,20260316_220301

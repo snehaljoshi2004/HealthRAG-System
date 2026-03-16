@@ -1,0 +1,6 @@
+# Anderson, R. L., Trivedi, D. V., Sarkar, S. S., Henze, M., Ma, W., Gong, H., … Spudich, J. A. (2018). Deciphering the super relaxed state of human β-cardiac myosin and the mode of action of mavacamten from myosin molecules to muscle fibers. Proceedings of the National Academy of Sciences of the United States of America, 115(35), E8143–E8152.
+
+## Page /
+
+“Mavacamten was identified in a screen for actin-activated myosin ATPase inhibitors, and it lengthens the total cycle time (t<sub>c</sub>) of the ATPase cycle. This results in a reduction of the duty ratio (t<sub>s</sub>/t<sub>c</sub>) and therefore of the ensemble force, since F<sub>ens</sub> = f<sub>int</sub> · N<sub>a</sub> · duty ratio, where f<sub>int</sub> is the intrinsic force of a myosin molecule and N<sub>a</sub> is the total number of myosin heads in the sarcomere that are functionally accessible for interaction with actin. Here we show that mavacamten reduces N<sub>a</sub> by stabilizing purified human β-cardiac myosin in a state with a very slow release of bound nucleotide (SRX, an off-state of myosin). Using the same purified myosin, we then show by EM that mavacamten also stabilizes a folded-back structural state of the protein that is reminiscent of the interacting-heads motif (IHM).”
+

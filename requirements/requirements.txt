@@ -1,0 +1,45 @@
+# Core frameworks
+langchain==0.3.25
+langchain-community==0.3.25
+
+# Vector stores
+chromadb==0.6.3
+
+# Embeddings (GPU enabled)
+sentence-transformers==3.4.1
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
+accelerate==1.5.1
+
+# Document loaders
+pypdf==5.3.0
+markdown==3.7
+beautifulsoup4==4.13.3
+requests==2.32.3
+python-dotenv==1.0.1
+
+# Text processing
+tiktoken==0.9.0
+
+# Phase 2: Hybrid search
+rank-bm25==0.2.2
+
+
+# Phase 3: Evaluation
+ragas
+datasets==3.3.2
+pandas==2.2.3
+pytest==8.3.5
+pyyaml==6.0.2
+
+# Utilities
+tqdm==4.67.1
+loguru==0.7.3
+pydantic==2.10.6
+
+
+Flask==2.3.3
+Werkzeug==2.3.7
+Jinja2==3.1.2
+markdown

@@ -1,0 +1,22 @@
+id,question,category,complexity,context_found,num_contexts,top_score,timestamp
+0,What is the significance of positive Babinski sign with muscle atrophy and fasciculations in the sam...,,advanced,True,3,2.485475038506894,20260316_165219
+1,Which clinical feature distinguishes neuroborreliosis from other causes of facial palsy?...,,advanced,True,3,2.3390370194668013,20260316_165219
+2,"1. In GIST patients, why is imatinib preferred for a primary KIT exon 11 mutation, whereas sunitinib...",,advanced,True,3,1.7201514300618528,20260316_165219
+3,3. Choose the characteristic effect of altered heart rate on valvular heart lesions (two correct ans...,,advanced,False,3,3.8703320301305464,20260316_165219
+4,"Which infection-related disease presents with cerebellar ataxia, hemiplegia, and multiple cranial ne...",,advanced,True,3,2.2129191828061496,20260316_165219
+5,1. Which of the following enzymes is directly involved in the iodination of tyrosyl residues in thyr...,,advanced,True,3,1.9339650654197618,20260316_165219
+6,"2. A 45-year-old woman is diagnosed with IDH1-mutant, MGMT-methylated glioblastoma multiforme (GBM)....",,advanced,False,3,-0.1389789207964232,20260316_165219
+7,"9. In the PARADIGM-HF study, LCZ696 was used, which is a combination of:
+A. a neprilysin inhibitor a...",,advanced,False,3,3.485303284212479,20260316_165219
+8,1. The use of digitalis and verapamil is absolutely contraindicated in:...,,advanced,False,3,3.8624100146702034,20260316_165219
+9,"1. A 76-year-old man, previously without chronic illnesses and not on any regular medications, sudde...",,advanced,False,3,-1.6117794754229737,20260316_165219
+10,5. A mutation in which gene is most commonly associated with generalized glucocorticoid resistance (...,,advanced,True,3,2.793114901473268,20260316_165219
+11,"4. In the linear-quadratic model (α/β model), which describes late-responding tissues and how do you...",,advanced,True,3,1.1364103123489597,20260316_165219
+12,What is the most probable diagnosis in a 77-year-old woman with acute bilateral blindness and asymme...,,advanced,True,3,-0.8092861411838267,20260316_165219
+13,4. Which statement best describes the mechanism of action of the investigational therapy NTLA-2001 i...,,advanced,True,3,0.7916545265629286,20260316_165219
+14,1. Explain how dual inhibition of SGLT1 and SGLT2 by sotagliflozin confers a unique reduction in bot...,,advanced,True,3,1.40226110943382,20260316_165219
+15,A patient with hemiplegia and complete facial palsy on the contralateral side likely has a lesion wh...,,advanced,True,3,1.336594747627614,20260316_165219
+16,1. Describe the molecular mechanism by which the long non‐coding RNA MIAT regulates pathological car...,,advanced,True,3,1.7654848745315694,20260316_165219
+17,"2. In a patient with metastatic melanoma carrying a BRAF V600E mutation, combination therapy with a ...",,advanced,True,3,0.11762651100980703,20260316_165219
+18,1. Describe the mechanistic role of lncRNA‐SNHG11 in reprogramming glutaminolysis and its crosstalk ...,,advanced,False,3,2.426388399812434,20260316_165219
+19,"6. In a patient with FAP carrying a c.3927_3931delAAAGA APC mutation, what is the optimal timing and...",,advanced,False,3,-1.8741521624073831,20260316_165219

@@ -1,0 +1,10 @@
+{
+  "timestamp": "20260316_165219",
+  "total_queries": 20,
+  "context_found_rate": 0.65,
+  "avg_top_score": 1.462246587413224,
+  "by_category": {},
+  "by_complexity": {
+    "advanced": 0.65
+  }
+}
